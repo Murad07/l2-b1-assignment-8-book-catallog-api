@@ -15,7 +15,15 @@ router.post(
 );
 router.get('/', CategoryController.getAllCategories);
 router.get('/:id', CategoryController.getSilgleCategory);
-router.patch('/:id', CategoryController.updateCategory);
-router.delete('/:id', CategoryController.deleteCategory);
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  CategoryController.updateCategory
+);
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  CategoryController.deleteCategory
+);
 
 export const categoryRoutes = router;
