@@ -17,3 +17,7 @@ you have to add a 'authorization' token on Header you will get it from login
 ## Update user: http://localhost:5001/api/v1/users/867476f2-030a-4e8c-b71a-039dee727f29 (PATCH)
 
 ## Delete user: http://localhost:5001/api/v1/users/867476f2-030a-4e8c-b71a-039dee727f29 (DELETE)
+
+## ------------
+
+## Create Category: http://localhost:5001/api/v1/categories/create-category (POST)
