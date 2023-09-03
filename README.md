@@ -21,3 +21,5 @@ you have to add a 'authorization' token on Header you will get it from login
 ## ------------
 
 ## Create Category: http://localhost:5001/api/v1/categories/create-category (POST)
+
+## get all Categories: http://localhost:5001/api/v1/categories
