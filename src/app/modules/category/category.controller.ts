@@ -38,8 +38,33 @@ const getSilgleCategory = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateCategory = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const result = await CategoryService.updateCategory(id, payload);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category updated successfully',
+    data: result,
+  });
+});
+
+const deleteCategory = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await CategoryService.deleteCategory(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category deleted successfully',
+    data: result,
+  });
+});
+
 export const CategoryController = {
   insertIntoDB,
   getAllCategories,
   getSilgleCategory,
+  updateCategory,
+  deleteCategory,
 };

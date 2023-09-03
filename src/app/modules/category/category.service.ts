@@ -23,8 +23,32 @@ const getSilgleCategory = async (id: string): Promise<ICategory | null> => {
   return result;
 };
 
+const updateCategory = async (
+  id: string,
+  payload: Partial<ICategory>
+): Promise<ICategory> => {
+  const result = await prisma.category.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return result;
+};
+
+const deleteCategory = async (id: string): Promise<ICategory> => {
+  const result = await prisma.category.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const CategoryService = {
   insertIntoDB,
   getAllCategories,
   getSilgleCategory,
+  updateCategory,
+  deleteCategory,
 };
