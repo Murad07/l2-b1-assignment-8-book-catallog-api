@@ -29,7 +29,26 @@ const getAllUsers = async (): Promise<IUserGet[]> => {
   }
 };
 
+const getSilgleUser = async (id: string): Promise<IUserGet | null> => {
+  const result = await prisma.user.findUnique({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true,
+    },
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const UserService = {
   insertIntoDB,
   getAllUsers,
+  getSilgleUser,
 };

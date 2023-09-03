@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
+import { IUserGet } from './user.interface';
 import { UserService } from './user.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
@@ -45,7 +46,21 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSilgleUser = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const result = await UserService.getSilgleUser(id);
+
+  sendResponse<IUserGet>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Student retrieved successfully !',
+    data: result,
+  });
+});
+
 export const UserController = {
   insertIntoDB,
   getAllUsers,
+  getSilgleUser,
 };
