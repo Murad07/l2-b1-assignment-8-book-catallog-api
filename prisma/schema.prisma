@@ -11,17 +11,13 @@ datasource db {
 }
 
 
-enum Role {
-  ADMIN
-  CUSTOMER
-}
 
 model User {
   id                String   @id @default(uuid()) // Assuming you want UUID as the primary key
   name              String
   email             String   @unique
   password          String
-  role              Role
+  role              String
   contactNo         String?
   address           String?
   profileImg        String?
