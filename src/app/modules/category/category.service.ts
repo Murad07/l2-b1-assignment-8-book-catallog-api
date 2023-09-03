@@ -14,7 +14,17 @@ const getAllCategories = async (): Promise<ICategory[]> => {
   return result;
 };
 
+const getSilgleCategory = async (id: string): Promise<ICategory | null> => {
+  const result = await prisma.category.findUnique({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const CategoryService = {
   insertIntoDB,
   getAllCategories,
+  getSilgleCategory,
 };

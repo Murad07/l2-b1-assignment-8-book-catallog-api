@@ -54,7 +54,7 @@ const getSilgleUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUserGet>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User getched successfully',
+    message: 'User fetched successfully',
     data: result,
   });
 });

@@ -14,5 +14,6 @@ router.post(
   CategoryController.insertIntoDB
 );
 router.get('/', CategoryController.getAllCategories);
+router.get('/:id', CategoryController.getSilgleCategory);
 
 export const categoryRoutes = router;
