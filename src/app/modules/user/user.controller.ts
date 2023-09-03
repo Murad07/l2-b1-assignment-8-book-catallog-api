@@ -54,7 +54,19 @@ const getSilgleUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUserGet>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student retrieved successfully !',
+    message: 'User getched successfully',
+    data: result,
+  });
+});
+
+const updateUser = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const result = await UserService.updateUser(id, payload);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User updated successfully',
     data: result,
   });
 });
@@ -63,4 +75,5 @@ export const UserController = {
   insertIntoDB,
   getAllUsers,
   getSilgleUser,
+  updateUser,
 };

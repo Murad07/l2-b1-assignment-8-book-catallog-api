@@ -47,8 +47,22 @@ const getSilgleUser = async (id: string): Promise<IUserGet | null> => {
   return result;
 };
 
+const updateUser = async (
+  id: string,
+  payload: Partial<IUserGet>
+): Promise<IUserGet> => {
+  const result = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return result;
+};
+
 export const UserService = {
   insertIntoDB,
   getAllUsers,
   getSilgleUser,
+  updateUser,
 };
