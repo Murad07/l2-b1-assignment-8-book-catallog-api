@@ -43,3 +43,5 @@ you have to add a 'authorization' token on Header you will get it from login
 ## book update: http://localhost:5001/api/v1/books/0a48c5ee-a5f8-4fe0-a58b-06c85f7ee2fd (PATCH)
 
 ## book delete: http://localhost:5001/api/v1/books/0a48c5ee-a5f8-4fe0-a58b-06c85f7ee2fd (DELETE)
+
+## get all orders by admin: http://localhost:5001/api/v1/orders (GET)
