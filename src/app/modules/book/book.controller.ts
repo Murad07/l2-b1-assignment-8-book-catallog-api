@@ -20,7 +20,7 @@ const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Books retrieved successfully',
+    message: 'Books fetched successfully',
     data: result,
   });
 });

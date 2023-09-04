@@ -12,7 +12,11 @@ const insertIntoDB = async (data: Book): Promise<Book> => {
 };
 
 const getAllBooks = async (): Promise<Book[]> => {
-  const result = await prisma.book.findMany();
+  const result = await prisma.book.findMany({
+    include: {
+      category: true,
+    },
+  });
   return result;
 };
 

@@ -13,7 +13,7 @@ router.post(
   validateRequest(BookValidation.create),
   BookController.insertIntoDB
 );
-// router.get('/', CategoryController.getAllCategories);
+router.get('/', BookController.getAllBooks);
 // router.get('/:id', CategoryController.getSilgleCategory);
 // router.patch(
 //   '/:id',
