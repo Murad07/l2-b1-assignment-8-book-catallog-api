@@ -12,7 +12,21 @@ import { OrderService } from './order.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   const { userId, orderedBooks } = req.body;
-  const result = await OrderService.insertIntoDB(userId, orderedBooks);
+
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
+
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+
+  req.user = verifiedUser; // role  , userid
+  const loginUserId = req.user.userId;
+  console.log(userId);
+
+  const result = await OrderService.insertIntoDB(loginUserId, orderedBooks);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
