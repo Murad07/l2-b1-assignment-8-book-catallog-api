@@ -14,13 +14,10 @@ router.post(
   OrderController.insertIntoDB
 );
 router.get('/', OrderController.getAllOrders);
-// router.get('/:id', OrderController.getSilgleOrder);
-// router.patch(
-//   '/:id',
-//   auth(ENUM_USER_ROLE.ADMIN),
-//   validateRequest(OrderValidation.update),
-//   OrderController.updateOrder
-// );
-// router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), OrderController.deleteOrder);
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getSilgleOrder
+);
 
 export const orderRoutes = router;

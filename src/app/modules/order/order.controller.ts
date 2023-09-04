@@ -1,8 +1,13 @@
 // import { Order } from '@prisma/client';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { Secret } from 'jsonwebtoken';
+import config from '../../../config';
+import ApiError from '../../../errors/ApiError';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
+import { IOrder } from './order.interface';
 import { OrderService } from './order.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
@@ -26,65 +31,40 @@ const getAllOrders = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const getSilgleOrder = catchAsync(async (req: Request, res: Response) => {
-//   const page = parseInt(req.query.page as string) || 1;
-//   const size = parseInt(req.query.size as string) || 10;
+const getSilgleOrder = catchAsync(async (req: Request, res: Response) => {
+  // identify the user role
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
 
-//   const id = req.params.id;
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
 
-//   const resultB = await OrderService.getSilgleOrder(id);
+  req.user = verifiedUser; // role  , userid
+  //   console.log('mm : ' + JSON.stringify(req.user));
+  const userRole = req.user.role;
+  const userId = req.user.userId;
 
-//   if (!resultB) {
-//     const resultC = await OrderService.getOrderByCategory({
-//       id,
-//       page,
-//       size,
-//     });
+  const id = req.params.id;
 
-//     sendResponse(res, {
-//       statusCode: httpStatus.OK,
-//       success: true,
-//       message: 'Orders with associated category data fetched successfully',
-//       meta: resultC.meta,
-//       data: resultC.data,
-//     });
-//   } else {
-//     sendResponse<Order>(res, {
-//       statusCode: httpStatus.OK,
-//       success: true,
-//       message: 'Order fetched successfully',
-//       data: resultB,
-//     });
-//   }
-// });
+  const result = await OrderService.getSilgleOrder(id);
 
-// const updateOrder = catchAsync(async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const payload = req.body;
-//   const result = await OrderService.updateOrder(id, payload);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Order updated successfully',
-//     data: result,
-//   });
-// });
+  if (userRole === 'customer' && result?.userId !== userId) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
 
-// const deleteOrder = catchAsync(async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const result = await OrderService.deleteOrder(id);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Order deleted successfully',
-//     data: result,
-//   });
-// });
+  sendResponse<IOrder>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Order fetched successfully',
+    data: result,
+  });
+});
 
 export const OrderController = {
   insertIntoDB,
   getAllOrders,
-  //   getSilgleOrder,
-  //   updateOrder,
-  //   deleteOrder,
+  getSilgleOrder,
 };

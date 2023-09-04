@@ -22,45 +22,17 @@ const getAllOrders = async (): Promise<IOrder[]> => {
   return result;
 };
 
-// const getSilgleOrder = async (id: string): Promise<Order | null> => {
-//   const result = await prisma.order.findUnique({
-//     where: {
-//       id,
-//     },
-//     include: {
-//       category: true,
-//     },
-//   });
-//   return result;
-// };
-
-// const updateOrder = async (
-//   id: string,
-//   payload: Partial<Order>
-// ): Promise<Order> => {
-//   const result = await prisma.order.update({
-//     where: {
-//       id,
-//     },
-//     data: payload,
-//   });
-//   return result;
-// };
-
-// const deleteOrder = async (id: string): Promise<Order> => {
-//   const result = await prisma.order.delete({
-//     where: {
-//       id,
-//     },
-//   });
-//   return result;
-// };
+const getSilgleOrder = async (id: string): Promise<IOrder | null> => {
+  const result = await prisma.order.findUnique({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
 
 export const OrderService = {
   insertIntoDB,
   getAllOrders,
-  //   getSilgleOrder,
-  //   updateOrder,
-  //   deleteOrder,
-  //   getOrderByCategory,
+  getSilgleOrder,
 };
