@@ -18,7 +18,7 @@ const getAllBooks = async (
 ): Promise<IGenericResponse<Book[]>> => {
   const {
     page = 1,
-    size = 3,
+    size = 10,
     sortBy,
     sortOrder,
     minPrice,
@@ -112,6 +112,9 @@ const getSilgleBook = async (id: string): Promise<Book | null> => {
   const result = await prisma.book.findUnique({
     where: {
       id,
+    },
+    include: {
+      category: true,
     },
   });
   return result;

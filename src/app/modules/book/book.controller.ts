@@ -17,7 +17,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
-  const size = parseInt(req.query.size as string) || 3;
+  const size = parseInt(req.query.size as string) || 10;
   const sortBy = req.query.sortBy as string | undefined;
   const sortOrder = req.query.sortOrder as 'asc' | 'desc' | undefined;
   const minPrice = parseFloat(req.query.minPrice as string) || undefined;

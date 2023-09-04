@@ -14,6 +14,7 @@ router.post(
   BookController.insertIntoDB
 );
 router.get('/', BookController.getAllBooks);
+router.get('/:id', BookController.getSilgleBook);
 // router.get('/:id', CategoryController.getSilgleCategory);
 // router.patch(
 //   '/:id',
