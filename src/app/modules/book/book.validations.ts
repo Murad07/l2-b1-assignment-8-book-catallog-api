@@ -11,7 +11,7 @@ const create = z.object({
     genre: z.string({
       required_error: 'Genre is required',
     }),
-    price: z.string({
+    price: z.number({
       required_error: 'Price is required',
     }),
     publicationDate: z.string({

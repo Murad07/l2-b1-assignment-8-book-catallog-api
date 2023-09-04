@@ -29,3 +29,7 @@ you have to add a 'authorization' token on Header you will get it from login
 ## update category: http://localhost:5001/api/v1/categories/69ced1e2-1b53-44f3-83b7-ca760d53a682 (PATCH)
 
 ## delete category: http://localhost:5001/api/v1/categories/69ced1e2-1b53-44f3-83b7-ca760d53a682 (DELETE)
+
+## ----------- Book
+
+## book create: http://localhost:5001/api/v1/books/create-book (POST)
