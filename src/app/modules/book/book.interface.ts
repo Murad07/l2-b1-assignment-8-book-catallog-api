@@ -1,8 +1,10 @@
-// export type IBook = {
-//   title: string;
-//   author: string;
-//   price: Float;
-//   genre: string;
-//   publicationDate: DateTime;
-//   categoryId: string;
-// };
+export type GetBooksParams = {
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  minPrice?: number;
+  maxPrice?: number;
+  category?: string;
+  search?: string;
+};

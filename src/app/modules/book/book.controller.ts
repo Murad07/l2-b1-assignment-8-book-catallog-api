@@ -16,12 +16,31 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
-  const result = await BookService.getAllBooks();
+  const page = parseInt(req.query.page as string) || 1;
+  const size = parseInt(req.query.size as string) || 3;
+  const sortBy = req.query.sortBy as string | undefined;
+  const sortOrder = req.query.sortOrder as 'asc' | 'desc' | undefined;
+  const minPrice = parseFloat(req.query.minPrice as string) || undefined;
+  const maxPrice = parseFloat(req.query.maxPrice as string) || undefined;
+  const category = req.query.category as string | undefined;
+  const search = req.query.search as string | undefined;
+
+  const result = await BookService.getAllBooks({
+    page,
+    size,
+    sortBy,
+    sortOrder,
+    minPrice,
+    maxPrice,
+    category,
+    search,
+  });
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Books fetched successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 

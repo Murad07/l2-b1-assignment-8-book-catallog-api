@@ -33,3 +33,5 @@ you have to add a 'authorization' token on Header you will get it from login
 ## ----------- Book
 
 ## book create: http://localhost:5001/api/v1/books/create-book (POST)
+
+## get all books: http://localhost:5001/api/v1/books?page=1&size=3&sortBy=title&sortOrder=asc&minPrice=100&maxPrice=500&search=Business Day (GET)
