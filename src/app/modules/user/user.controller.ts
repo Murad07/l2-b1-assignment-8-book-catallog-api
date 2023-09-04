@@ -1,6 +1,10 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { Secret } from 'jsonwebtoken';
+import config from '../../../config';
+import ApiError from '../../../errors/ApiError';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { IUserGet } from './user.interface';
@@ -47,7 +51,25 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSilgleUser = catchAsync(async (req: Request, res: Response) => {
+  // identify the user role
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
+
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+
+  req.user = verifiedUser; // role  , userid
+  const userRole = req.user.role;
+  const userId = req.user.userId;
+
   const id = req.params.id;
+
+  if (userRole === 'customer' && id !== userId) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
 
   const result = await UserService.getSilgleUser(id);
 
