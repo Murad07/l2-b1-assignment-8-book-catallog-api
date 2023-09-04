@@ -22,7 +22,26 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllOrders = catchAsync(async (req: Request, res: Response) => {
-  const result = await OrderService.getAllOrders();
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
+
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+
+  req.user = verifiedUser; // role  , userid
+  const userRole = req.user.role;
+  const userId = req.user.userId;
+
+  let result = null;
+  if (userRole === 'customer') {
+    result = await OrderService.getAllOrders(userId);
+  } else {
+    result = await OrderService.getAllOrders(null);
+  }
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -43,7 +62,6 @@ const getSilgleOrder = catchAsync(async (req: Request, res: Response) => {
   verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
 
   req.user = verifiedUser; // role  , userid
-  //   console.log('mm : ' + JSON.stringify(req.user));
   const userRole = req.user.role;
   const userId = req.user.userId;
 

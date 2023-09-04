@@ -17,8 +17,19 @@ const insertIntoDB = async (
   return result;
 };
 
-const getAllOrders = async (): Promise<IOrder[]> => {
-  const result = await prisma.order.findMany();
+const getAllOrders = async (userId: string | null): Promise<IOrder[]> => {
+  let result = null;
+
+  if (userId) {
+    result = await prisma.order.findMany({
+      where: {
+        userId,
+      },
+    });
+  } else {
+    result = await prisma.order.findMany();
+  }
+
   return result;
 };
 

@@ -13,7 +13,11 @@ router.post(
   validateRequest(OrderValidation.create),
   OrderController.insertIntoDB
 );
-router.get('/', OrderController.getAllOrders);
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getAllOrders
+);
 router.get(
   '/:id',
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
