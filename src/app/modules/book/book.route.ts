@@ -15,16 +15,12 @@ router.post(
 );
 router.get('/', BookController.getAllBooks);
 router.get('/:id', BookController.getSilgleBook);
-// router.get('/:id', CategoryController.getSilgleCategory);
-// router.patch(
-//   '/:id',
-//   auth(ENUM_USER_ROLE.ADMIN),
-//   CategoryController.updateCategory
-// );
-// router.delete(
-//   '/:id',
-//   auth(ENUM_USER_ROLE.ADMIN),
-//   CategoryController.deleteCategory
-// );
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  validateRequest(BookValidation.update),
+  BookController.updateBook
+);
+router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), BookController.deleteBook);
 
 export const bookRoutes = router;

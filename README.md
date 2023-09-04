@@ -37,3 +37,9 @@ you have to add a 'authorization' token on Header you will get it from login
 ## get all books: http://localhost:5001/api/v1/books?page=1&size=3&sortBy=title&sortOrder=asc&minPrice=100&maxPrice=500&search=Business Day (GET)
 
 ## get single book by bookID: http://localhost:5001/api/v1/books/0a48c5ee-a5f8-4fe0-a58b-06c85f7ee2fd (GET)
+
+## get book by CategoryID: http://localhost:5001/api/v1/books/cb17d655-e5f2-4910-8def-c341b34a60e0 (GET)
+
+## book update: http://localhost:5001/api/v1/books/0a48c5ee-a5f8-4fe0-a58b-06c85f7ee2fd (PATCH)
+
+## book delete: http://localhost:5001/api/v1/books/0a48c5ee-a5f8-4fe0-a58b-06c85f7ee2fd (DELETE)
