@@ -45,16 +45,35 @@ const getAllBooks = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSilgleBook = catchAsync(async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const size = parseInt(req.query.size as string) || 10;
+
   const id = req.params.id;
 
-  const result = await BookService.getSilgleBook(id);
+  const resultB = await BookService.getSilgleBook(id);
 
-  sendResponse<Book>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Book fetched successfully',
-    data: result,
-  });
+  if (!resultB) {
+    const resultC = await BookService.getBookByCategory({
+      id,
+      page,
+      size,
+    });
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Books with associated category data fetched successfully',
+      meta: resultC.meta,
+      data: resultC.data,
+    });
+  } else {
+    sendResponse<Book>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Book fetched successfully',
+      data: resultB,
+    });
+  }
 });
 
 const updateBook = catchAsync(async (req: Request, res: Response) => {

@@ -1,7 +1,7 @@
 import { Book, Prisma } from '@prisma/client';
 import { IGenericResponse } from '../../../interfaces/common';
 import prisma from '../../../shared/prisma';
-import { GetBooksParams } from './book.interface';
+import { GetBooksCat, GetBooksParams } from './book.interface';
 
 const insertIntoDB = async (data: Book): Promise<Book> => {
   const result = await prisma.book.create({
@@ -104,6 +104,37 @@ const getAllBooks = async (
       total,
       totalPage,
     },
+    data,
+  };
+};
+
+const getBookByCategory = async (
+  params: GetBooksCat
+): Promise<IGenericResponse<Book[]>> => {
+  const { id, page = 1, size = 10 } = params;
+
+  const query: Prisma.BookFindManyArgs = {
+    skip: (page - 1) * size,
+    take: size,
+    include: {
+      category: true,
+    },
+    where: { categoryId: id },
+  };
+
+  const [data, total] = await Promise.all([
+    prisma.book.findMany(query),
+    prisma.book.count({ where: query.where }),
+  ]);
+
+  const totalPage = Math.ceil(total / size);
+  return {
+    meta: {
+      page,
+      size,
+      total,
+      totalPage,
+    },
     data: data,
   };
 };
@@ -148,4 +179,5 @@ export const BookService = {
   getSilgleBook,
   updateBook,
   deleteBook,
+  getBookByCategory,
 };

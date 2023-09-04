@@ -8,3 +8,9 @@ export type GetBooksParams = {
   category?: string;
   search?: string;
 };
+
+export type GetBooksCat = {
+  id: string;
+  page?: number;
+  size?: number;
+};
