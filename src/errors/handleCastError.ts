@@ -1,20 +1,21 @@
-import mongoose from 'mongoose';
-import { IGenericErrorMessage } from '../interfaces/error';
+import { Prisma } from '@prisma/client';
+import { IGenericErrorResponse } from '../interfaces/common';
 
-const handleCastError = (error: mongoose.Error.CastError) => {
-  const errors: IGenericErrorMessage[] = [
+const handleValidationError = (
+  error: Prisma.PrismaClientValidationError
+): IGenericErrorResponse => {
+  const errors = [
     {
-      path: error.path,
-      message: 'Invalid Id',
+      path: '',
+      message: error.message,
     },
   ];
-
   const statusCode = 400;
   return {
     statusCode,
-    message: 'Cast Error',
+    message: 'Validation Error',
     errorMessages: errors,
   };
 };
 
-export default handleCastError;
+export default handleValidationError;
