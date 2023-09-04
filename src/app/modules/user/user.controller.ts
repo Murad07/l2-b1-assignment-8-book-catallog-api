@@ -81,6 +81,31 @@ const getSilgleUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const userProfile = catchAsync(async (req: Request, res: Response) => {
+  // identify the user role
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
+
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+
+  req.user = verifiedUser; // role  , userid
+  const userId = req.user.userId;
+  console.log('mm: ' + JSON.stringify(req.user));
+
+  const result = await UserService.getSilgleUser(userId);
+
+  sendResponse<IUserGet>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User fetched successfully',
+    data: result,
+  });
+});
+
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const payload = req.body;
@@ -110,4 +135,5 @@ export const UserController = {
   getSilgleUser,
   updateUser,
   deleteUser,
+  userProfile,
 };
