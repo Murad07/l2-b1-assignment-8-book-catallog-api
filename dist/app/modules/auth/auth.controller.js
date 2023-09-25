@@ -38,8 +38,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //   expiresIn: '1h',
         // });
         res.status(200).json({
-            message: 'Authentication successful',
-            accessToken,
+            success: true,
+            statusCode: 200,
+            message: 'User singin successfully!',
+            token: accessToken,
         });
     }
     catch (error) {

@@ -12,5 +12,5 @@ const auth_controller_1 = require("./auth.controller");
 const auth_validations_1 = require("./auth.validations");
 const router = express_1.default.Router();
 router.post('/signup', (0, validateRequest_1.default)(user_validations_1.UserValidation.create), user_controller_1.UserController.insertIntoDB);
-router.post('/login', (0, validateRequest_1.default)(auth_validations_1.AuthValidation.loginZodSchema), auth_controller_1.AuthController.loginUser);
+router.post('/signin', (0, validateRequest_1.default)(auth_validations_1.AuthValidation.loginZodSchema), auth_controller_1.AuthController.loginUser);
 exports.authRoutes = router;
