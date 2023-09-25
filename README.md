@@ -6,7 +6,7 @@
 
 - User Signup: https://l2-b1-assignment-8-book-catallog-api.vercel.app/api/v1/auth/signup (POST)
 
-- User login: https://l2-b1-assignment-8-book-catallog-api.vercel.app/api/v1/auth/login (POST)
+- User login: https://l2-b1-assignment-8-book-catallog-api.vercel.app/api/v1/auth/signin (POST)
 
 request body:
 {

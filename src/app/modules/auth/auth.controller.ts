@@ -36,8 +36,10 @@ const loginUser = async (req: Request, res: Response) => {
     // });
 
     res.status(200).json({
-      message: 'Authentication successful',
-      accessToken,
+      success: true,
+      statusCode: 200,
+      message: 'User singin successfully!',
+      token: accessToken,
     });
   } catch (error) {
     console.error(error);
